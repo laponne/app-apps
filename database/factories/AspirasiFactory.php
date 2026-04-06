@@ -20,15 +20,26 @@ class AspirasiFactory extends Factory
      */
     public function definition(): array
     {
+        $statusList = [
+            'menunggu',
+            'proses',
+            'selesai',
+        ];
+
+        $feedbackOptions = [
+            null,
+            5,
+            4,
+            3,
+            2,
+            1,
+        ];
+
         return [
             'laporan_id' => 1,  // Will be overridden in seeder
             'admin_id' => 1,  // Will be overridden in seeder
-            'status' => $this->faker->randomElement([
-                'menunggu',
-                'proses',
-                'selesai'
-            ]),
-            'feedback' => $this->faker->optional()->numberBetween(1, 5) 
+            'status' => $this->faker->randomElement($statusList),
+            'feedback' => $this->faker->randomElement($feedbackOptions)
         ];
     }
 }

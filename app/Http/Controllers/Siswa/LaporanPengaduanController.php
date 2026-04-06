@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Siswa;
 
 use App\Models\Aspirasi;
+use App\Models\Attachment;
 use App\Models\Kategori;
 use App\Models\LaporanPengaduan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class LaporanPengaduanController
 {
@@ -21,15 +23,23 @@ class LaporanPengaduanController
         $request->validate([
             'kategori_id' => 'required|exists:kategoris,id',
             'ket' => 'required|string',
-            'lokasi' => 'required|string|max:255'
+            'lokasi' => 'required|string|max:255',
+            'attachments.*' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:5120' // max 5MB
         ]);
 
-        LaporanPengaduan::create([
+        $laporan = LaporanPengaduan::create([
             'siswa_id' => Auth::guard('siswa')->user()->id,
             'kategori_id' => $request->kategori_id,
             'ket' => $request->ket,
             'lokasi' => $request->lokasi,
         ]);
+
+        // Simpan lampiran jika ada
+        if ($request->hasFile('attachments')) {
+            foreach ($request->file('attachments') as $file) {
+                $this->storeAttachment($file, $laporan);
+            }
+        }
 
         return redirect()
             ->route('siswa.dashboard')
@@ -62,5 +72,35 @@ class LaporanPengaduanController
         return redirect()
             ->route('siswa.dashboard')
             ->with('success', 'Terima kasih atas feedback Anda.');
+    }
+
+    /**
+     * Simpan attachment file
+     */
+    private function storeAttachment($file, LaporanPengaduan $laporan)
+    {
+        $path = 'laporan-bukti/' . date('Y/m/d');
+        $filename = time() . '_' . $file->getClientOriginalName();
+        
+        $file->storeAs($path, $filename, 'public');
+
+        Attachment::create([
+            'laporan_pengaduan_id' => $laporan->id,
+            'file_name' => $filename,
+            'file_path' => $path . '/' . $filename,
+            'file_type' => $file->getMimeType(),
+            'file_size' => $file->getSize(),
+        ]);
+    }
+
+    /**
+     * Delete attachment
+     */
+    public function deleteAttachment(Attachment $attachment)
+    {
+        Storage::disk('public')->delete($attachment->file_path);
+        $attachment->delete();
+
+        return redirect()->back()->with('success', 'Lampiran berhasil dihapus');
     }
 }

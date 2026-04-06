@@ -12,7 +12,7 @@
         @endif
     </title>
     <link rel="stylesheet" href="{{ asset('bs/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('bs/css/bootstrap-icons.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bs/font/bootstrap-icons.css') }}">
 </head>
 <body>
     @yield('body')

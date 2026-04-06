@@ -17,17 +17,37 @@ class LaporanPengaduanFactory extends Factory
      */
     public function definition(): array
     {
+        $keluhan = [
+            'Lampu di ruang kelas tidak menyala',
+            'Kursi dan meja rusak perlu diganti',
+            'Pintu ruang kelas tidak bisa dikunci',
+            'Ventilasi udara kurang baik',
+            'Papan tulis sudah tidak rata',
+            'Kabel listrik terputus dan berbahaya',
+            'AC tidak berfungsi dengan optimal',
+            'Keran air bocor terus-menerus',
+            'Lantai retak dan licin',
+            'Jendela pecah dan perlu diganti',
+            'Atap bocor saat hujan',
+            'Meja laboratorium tidak stabil',
+            'Lemari penyimpanan barang hilang',
+            'Pintu toilet tidak bisa ditutup',
+            'Saluran air tersumbat',
+        ];
+
+        $lokasi = [
+            'Ruang Kelas',
+            'Laboratorium',
+            'Perpustakaan',
+            'Toilet',
+            'Lapangan',
+        ];
+
         return [
             'siswa_id' => 1,  // Will be overridden in seeder
             'kategori_id' => 1,  // Will be overridden in seeder
-            'ket' => $this->faker->sentence(12),
-            'lokasi' => $this->faker->randomElement([
-                'Ruang Kelas',
-                'Laboratorium',
-                'Perpustakaan',
-                'Toilet',
-                'Lapangan',
-            ])
+            'ket' => $this->faker->randomElement($keluhan),
+            'lokasi' => $this->faker->randomElement($lokasi)
         ];
     }
 }

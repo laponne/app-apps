@@ -53,7 +53,7 @@ class LaporanAspirasiController
 
     public function show(LaporanPengaduan $laporan)
     {
-        $laporan->load(['kategori', 'aspirasi']);
+        $laporan->load(['siswa', 'kategori', 'aspirasi', 'attachments']);
 
         $kepuasan = [
             1 => 'Tidak Puas',

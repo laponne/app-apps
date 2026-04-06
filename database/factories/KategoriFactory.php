@@ -17,8 +17,16 @@ class KategoriFactory extends Factory
      */
     public function definition(): array
     {
+        $kategoriBangunan = [
+            'Ruang Kelas',
+            'Laboratorium',
+            'Perpustakaan',
+            'Toilet',
+            'Lapangan',
+        ];
+
         return [
-            'nama_kategori' => $this->faker->word(),
+            'nama_kategori' => $this->faker->randomElement($kategoriBangunan),
         ];
     }
 }

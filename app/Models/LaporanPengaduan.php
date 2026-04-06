@@ -30,4 +30,9 @@ class LaporanPengaduan extends Model
     {
         return $this->hasOne(Aspirasi::class, 'laporan_id');
     }
+
+    public function attachments()
+    {
+        return $this->hasMany(Attachment::class, 'laporan_pengaduan_id');
+    }
 }

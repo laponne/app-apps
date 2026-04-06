@@ -31,6 +31,7 @@ Route::prefix('siswa')->name('siswa.')->group(function () {
         Route::get('/akun/edit', [AkunController::class, 'edit'])->name('akun.edit');
         Route::put('/akun', [AkunController::class, 'update'])->name('akun.update');
         Route::post('/laporan/{aspirasi}/feedback', [LaporanPengaduanController::class, 'feedback'])->name('laporan.feedback');
+        Route::delete('/attachment/{attachment}', [LaporanPengaduanController::class, 'deleteAttachment'])->name('attachment.delete');
         Route::resource('/laporan', LaporanPengaduanController::class)->except('index', 'edit', 'update');
     });
 });

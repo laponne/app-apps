@@ -31,6 +31,50 @@
                         {{ $laporan->ket }}
                     </div>
                 </div>
+                {{-- Lampiran Bukti --}}
+                @if ($laporan->attachments->count() > 0)
+                    <div class="mb-4">
+                        <div class="text-muted small">Lampiran Bukti</div>
+                        <div class="row g-2 mt-2">
+                            @foreach ($laporan->attachments as $attachment)
+                                <div class="col-6 col-md-4">
+                                    <div class="card">
+                                        @if ($attachment->isImage())
+                                            <img src="{{ asset('storage/' . $attachment->file_path) }}" 
+                                                class="card-img-top" style="height: 150px; object-fit: cover;" 
+                                                alt="{{ $attachment->file_name }}">
+                                        @else
+                                            <div class="card-img-top bg-light d-flex align-items-center justify-content-center" 
+                                                style="height: 150px;">
+                                                <i class="bi bi-file-pdf fs-1 text-danger"></i>
+                                            </div>
+                                        @endif
+                                        <div class="card-body p-2">
+                                            <div class="text-truncate small" title="{{ $attachment->file_name }}">
+                                                {{ $attachment->file_name }}
+                                            </div>
+                                            <div class="text-muted small">{{ $attachment->formatFileSize() }}</div>
+                                            <div class="mt-2">
+                                                <a href="{{ asset('storage/' . $attachment->file_path) }}" 
+                                                    class="btn btn-sm btn-outline-primary" target="_blank">
+                                                    <i class="bi bi-download"></i> Download
+                                                </a>
+                                                <form action="{{ route('siswa.attachment.delete', $attachment) }}" method="POST" class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger" 
+                                                        onclick="return confirm('Hapus lampiran ini?')">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
                 {{-- Tanggapan Admin --}}
                 @include('siswa.laporan.tanggapan')
                 {{-- Feedback --}}
