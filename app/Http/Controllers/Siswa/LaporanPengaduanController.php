@@ -24,7 +24,7 @@ class LaporanPengaduanController
             'kategori_id' => 'required|exists:kategoris,id',
             'ket' => 'required|string',
             'lokasi' => 'required|string|max:255',
-            'attachments.*' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:5120' // max 5MB
+            'attachments.*' => 'required|file|mimes:jpg,jpeg,png,pdf|max:5120' // max 5MB
         ]);
 
         $laporan = LaporanPengaduan::create([
@@ -37,7 +37,7 @@ class LaporanPengaduanController
         // Simpan lampiran jika ada
         if ($request->hasFile('attachments')) {
             foreach ($request->file('attachments') as $file) {
-                $this->storeAttachment($file, $laporan);
+                $this->storeAttachment($file, $laporan, 'laporan');
             }
         }
 
@@ -66,9 +66,20 @@ class LaporanPengaduanController
     {
         $request->validate([
             'feedback' => 'required|integer|min:1|max:5',
+            'bukti' => 'required|file|mimes:jpg,jpeg,png,pdf|max:5120', // max 5MB
         ]);
 
-        $aspirasi->update($request->all());
+        // Simpan feedback ke aspirasi
+        $aspirasi->update([
+            'feedback' => $request->feedback,
+        ]);
+
+        // Simpan file bukti ke tabel attachments dengan type 'feedback'
+        $laporan = $aspirasi->laporan;
+        if ($request->hasFile('bukti') && $laporan) {
+            $this->storeAttachment($request->file('bukti'), $laporan, 'feedback');
+        }
+
         return redirect()
             ->route('siswa.dashboard')
             ->with('success', 'Terima kasih atas feedback Anda.');
@@ -77,19 +88,18 @@ class LaporanPengaduanController
     /**
      * Simpan attachment file
      */
-    private function storeAttachment($file, LaporanPengaduan $laporan)
+    private function storeAttachment($file, LaporanPengaduan $laporan, $type = 'laporan')
     {
         $path = 'laporan-bukti/' . date('Y/m/d');
         $filename = time() . '_' . $file->getClientOriginalName();
-        
         $file->storeAs($path, $filename, 'public');
-
         Attachment::create([
             'laporan_pengaduan_id' => $laporan->id,
             'file_name' => $filename,
             'file_path' => $path . '/' . $filename,
             'file_type' => $file->getMimeType(),
             'file_size' => $file->getSize(),
+            'type' => $type,
         ]);
     }
 

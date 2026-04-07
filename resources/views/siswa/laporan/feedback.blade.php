@@ -20,7 +20,16 @@
     @else
         {{-- BELUM MEMBERI FEEDBACK --}}
         <form action="{{ route('siswa.laporan.feedback', $laporan->aspirasi->id) }}"
-            method="POST">
+            method="POST" enctype="multipart/form-data">
+                        <div class="mt-3">
+                            <label for="bukti" class="form-label">Lampirkan Bukti <span class="text-danger">*</span></label>
+                            <input type="file" name="bukti" id="bukti" class="form-control" required accept="image/*,application/pdf">
+                            @error('bukti')
+                                <div class="text-danger small mt-2">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
             @csrf
             <div class="d-flex flex-column gap-2">
                 <label class="d-flex align-items-center gap-2">

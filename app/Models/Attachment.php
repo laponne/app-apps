@@ -15,7 +15,18 @@ class Attachment extends Model
         'file_path',
         'file_type',
         'file_size',
+        'type', // 'laporan' atau 'feedback'
     ];
+    // Scope untuk filter lampiran berdasarkan type
+    public function scopeLaporan($query)
+    {
+        return $query->where('type', 'laporan');
+    }
+
+    public function scopeFeedback($query)
+    {
+        return $query->where('type', 'feedback');
+    }
 
     protected $casts = [
         'file_size' => 'integer',
