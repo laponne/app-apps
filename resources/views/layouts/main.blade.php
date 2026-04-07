@@ -13,6 +13,7 @@
     </title>
     <link rel="stylesheet" href="{{ asset('bs/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bs/font/bootstrap-icons.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body>
     @yield('body')

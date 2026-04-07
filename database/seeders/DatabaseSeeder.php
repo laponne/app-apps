@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         $admin = Admin::firstOrCreate(
             ['username' => 'admin'],
             [
-                'nama' => 'Budi Santoso',
+                'nama' => 'Naufal Prana Jati',
                 'password' => \Illuminate\Support\Facades\Hash::make('password'),
             ]
         );
