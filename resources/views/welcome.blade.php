@@ -82,9 +82,6 @@
 							<h3 class="font-semibold text-gray-900 mb-2 text-center">Buat Akun</h3>
 							<p class="text-sm text-gray-600 text-center">Daftar dengan NIS dan nama Anda</p>
 						</div>
-						@if(!$loop->last ?? true)
-							<div class="hidden md:block absolute top-8 left-[60%] w-[calc(40%-2px)] h-1 bg-blue-200"></div>
-						@endif
 					</div>
 
 					<!-- Step 2 -->
@@ -94,9 +91,6 @@
 							<h3 class="font-semibold text-gray-900 mb-2 text-center">Buat Laporan</h3>
 							<p class="text-sm text-gray-600 text-center">Pilih kategori dan deskripsikan masalah</p>
 						</div>
-						@if(!$loop->last ?? true)
-							<div class="hidden md:block absolute top-8 left-[60%] w-[calc(40%-2px)] h-1 bg-green-200"></div>
-						@endif
 					</div>
 
 					<!-- Step 3 -->
@@ -106,9 +100,6 @@
 							<h3 class="font-semibold text-gray-900 mb-2 text-center">Sertakan Bukti</h3>
 							<p class="text-sm text-gray-600 text-center">Upload foto atau dokumen pendukung</p>
 						</div>
-						@if(!$loop->last ?? true)
-							<div class="hidden md:block absolute top-8 left-[60%] w-[calc(40%-2px)] h-1 bg-orange-200"></div>
-						@endif
 					</div>
 
 					<!-- Step 4 -->

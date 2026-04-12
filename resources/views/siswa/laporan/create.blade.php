@@ -55,32 +55,5 @@
 				</form>
 			</div>
 		</div>
-
-		<!-- Info Sidebar -->
-		<div class="lg:col-span-1">
-			<div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
-				<h3 class="font-semibold text-blue-900 mb-4 flex items-center gap-2">
-					<i class="bi bi-info-circle-fill"></i>Tips Membuat Laporan
-				</h3>
-				<ul class="space-y-3 text-sm text-blue-800">
-					<li class="flex gap-2">
-						<i class="bi bi-check-circle flex-shrink-0 mt-0.5"></i>
-						<span>Jelaskan masalah secara detail dan jelas</span>
-					</li>
-					<li class="flex gap-2">
-						<i class="bi bi-check-circle flex-shrink-0 mt-0.5"></i>
-						<span>Sertakan lokasi kejadian yang spesifik</span>
-					</li>
-					<li class="flex gap-2">
-						<i class="bi bi-check-circle flex-shrink-0 mt-0.5"></i>
-						<span>Lampirkan foto untuk membuktikan masalah</span>
-					</li>
-					<li class="flex gap-2">
-						<i class="bi bi-check-circle flex-shrink-0 mt-0.5"></i>
-						<span>Pilih kategori yang paling sesuai</span>
-					</li>
-				</ul>
-			</div>
-		</div>
 	</div>
 @endsection

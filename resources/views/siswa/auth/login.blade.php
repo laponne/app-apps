@@ -18,8 +18,8 @@
             <!-- NIS Field -->
             <div class="mb-6">
                 <label class="block text-sm font-medium text-gray-700 mb-2">NIS (Nomor Induk Siswa)</label>
-                <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-100 transition">
-                    <span class="px-3 py-2 bg-gray-50 text-gray-500">
+                <div class="flex items-center border-2 rounded-lg overflow-hidden transition @error('nis') border-red-500 bg-red-50 @else border-gray-300 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-100 @enderror">
+                    <span class="px-3 py-2 bg-gray-50 text-gray-500 @error('nis') bg-red-100 @enderror">
                         <i class="bi bi-person"></i>
                     </span>
                     <input type="text" name="nis"
@@ -28,7 +28,10 @@
                         value="{{ old('nis') }}">
                 </div>
                 @error('nis')
-                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    <div class="mt-2 p-3 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2">
+                        <i class="bi bi-exclamation-circle-fill text-red-600 text-lg flex-shrink-0 mt-0.5"></i>
+                        <p class="text-sm text-red-700 font-medium">{{ $message }}</p>
+                    </div>
                 @enderror
             </div>
 

@@ -55,14 +55,6 @@
             <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium py-2 rounded-lg transition duration-200 flex items-center justify-center gap-2 mb-4">
                 <i class="bi bi-unlock"></i>Masuk
             </button>
-
-            <!-- Info Box -->
-            <div class="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                <p class="text-xs text-blue-800 flex items-start gap-2">
-                    <i class="bi bi-info-circle flex-shrink-0 mt-0.5"></i>
-                    <span>Gunakan akun admin yang telah didaftarkan oleh sistem</span>
-                </p>
-            </div>
         </form>
     </div>
 @endsection

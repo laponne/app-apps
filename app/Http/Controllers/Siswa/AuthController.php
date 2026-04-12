@@ -21,9 +21,9 @@ class AuthController
 
         $siswa = Siswa::where('nis', $request->nis)->first();
         if (!$siswa) {
-            return redirect()
-                ->route('siswa.register')
-                ->with('nis', $request->nis);
+            return back()
+                ->withErrors(['nis' => 'Akun belum terdaftar'])
+                ->withInput();
         }
 
         Auth::guard('siswa')->login($siswa);
