@@ -8,6 +8,7 @@ class DashboardController
 {
     public function index()
     {
+        /** @var \App\Models\Siswa $siswa */
         $siswa = Auth::guard('siswa')->user();
         $laporan = $siswa->laporan()
             ->with(['kategori', 'aspirasi'])
