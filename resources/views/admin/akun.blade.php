@@ -70,14 +70,6 @@
 						<p class="text-sm text-gray-600 mb-1">Nama Admin</p>
 						<p class="text-lg font-semibold text-gray-900">{{ $admin->nama }}</p>
 					</div>
-
-					<!-- Status -->
-					<div>
-						<p class="text-sm text-gray-600 mb-2">Status</p>
-						<div class="inline-block bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
-							<i class="bi bi-check-circle-fill me-1"></i>Aktif
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>
