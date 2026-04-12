@@ -1,80 +1,86 @@
 @extends('layouts.auth')
 @section('title', 'Login Admin')
 @section('content')
-<div class="card shadow-md border-0" style="width: 100%; max-width: 420px;">
-	<div class="card-header bg-primary text-white text-center py-4">
-		<h4 class="card-title mb-0">
-			<i class="bi bi-shield-lock me-2"></i>Login Admin
-		</h4>
-	</div>
-	<form class="card-body p-4" method="post" action="{{ route('admin.login') }}">
-		@csrf
+    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-8 text-center">
+            <div class="inline-flex items-center justify-center w-12 h-12 bg-white/20 rounded-full mb-3">
+                <i class="bi bi-shield-lock text-white text-lg"></i>
+            </div>
+            <h2 class="text-xl font-bold text-white">Login Admin</h2>
+            <p class="text-blue-100 text-sm mt-1">Masuk ke sistem administrasi</p>
+        </div>
 
-		<div class="mb-4">
-			<label class="form-label">Username</label>
-			<div class="input-group">
-				<span class="input-group-text bg-light border-end-0">
-					<i class="bi bi-person text-muted"></i>
-				</span>
-				<input type="text"
-					class="form-control border-start-0 @error('username') is-invalid @enderror"
-					name="username"
-					placeholder="Masukkan username">
-			</div>
-			@error('username')
-				<div class="invalid-feedback d-block mt-2">
-					{{ $message }}
-				</div>
-			@enderror
-		</div>
+        <!-- Form -->
+        <form class="p-6" method="post" action="{{ route('admin.login') }}">
+            @csrf
 
-		<div class="mb-4">
-			<label class="form-label">Password</label>
-			<div class="input-group">
-				<span class="input-group-text bg-light border-end-0">
-					<i class="bi bi-key text-muted"></i>
-				</span>
-				<input type="password" id="password"
-					class="form-control border-start-0 border-end-0 @error('password') is-invalid @enderror"
-					name="password" placeholder="Masukkan password">
-				<span class="input-group-text bg-light border-start-0" style="cursor: pointer" onclick="togglePassword()">
-					<i id="icon-password" class="bi bi-eye text-muted"></i>
-				</span>
-			</div>
-			@error('password')
-				<div class="invalid-feedback d-block mt-2">
-					{{ $message }}
-				</div>
-			@enderror
-		</div>
+            <!-- Username Field -->
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+                <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-100 transition">
+                    <span class="px-3 py-2 bg-gray-50 text-gray-500">
+                        <i class="bi bi-person"></i>
+                    </span>
+                    <input type="text" name="username"
+                        class="flex-1 px-3 py-2 border-0 focus:ring-0 outline-none @error('username') bg-red-50 @enderror"
+                        placeholder="Masukkan username"
+                        value="{{ old('username') }}">
+                </div>
+                @error('username')
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                @enderror
+            </div>
 
-		<div class="d-grid mb-3">
-			<button type="submit" class="btn btn-primary btn-lg">
-				<i class="bi bi-unlock me-2"></i>Masuk
-			</button>
-		</div>
+            <!-- Password Field -->
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-100 transition">
+                    <span class="px-3 py-2 bg-gray-50 text-gray-500">
+                        <i class="bi bi-key"></i>
+                    </span>
+                    <input type="password" id="password" name="password"
+                        class="flex-1 px-3 py-2 border-0 focus:ring-0 outline-none @error('password') bg-red-50 @enderror"
+                        placeholder="Masukkan password">
+                    <button type="button" onclick="togglePassword()" class="px-3 py-2 bg-gray-50 text-gray-500 hover:text-gray-700 transition cursor-pointer">
+                        <i id="icon-password" class="bi bi-eye"></i>
+                    </button>
+                </div>
+                @error('password')
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                @enderror
+            </div>
 
-		<div class="alert alert-info alert-sm small mb-0">
-			<i class="bi bi-info-circle me-1"></i>
-			Gunakan akun admin yang telah didaftarkan oleh sistem
-		</div>
-	</form>
-</div>
+            <!-- Submit Button -->
+            <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium py-2 rounded-lg transition duration-200 flex items-center justify-center gap-2 mb-4">
+                <i class="bi bi-unlock"></i>Masuk
+            </button>
+
+            <!-- Info Box -->
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                <p class="text-xs text-blue-800 flex items-start gap-2">
+                    <i class="bi bi-info-circle flex-shrink-0 mt-0.5"></i>
+                    <span>Gunakan akun admin yang telah didaftarkan oleh sistem</span>
+                </p>
+            </div>
+        </form>
+    </div>
 @endsection
+
 @push('js')
 <script>
-	function togglePassword() {
-		const password = document.getElementById('password');
-		const icon = document.getElementById('icon-password');
-		if (password.type === 'password') {
-			password.type = 'text';
-			icon.classList.remove('bi-eye');
-			icon.classList.add('bi-eye-slash');
-		} else {
-			password.type = 'password';
-			icon.classList.remove('bi-eye-slash');
-			icon.classList.add('bi-eye');
-		}
-	}
+    function togglePassword() {
+        const password = document.getElementById('password');
+        const icon = document.getElementById('icon-password');
+        if (password.type === 'password') {
+            password.type = 'text';
+            icon.classList.remove('bi-eye');
+            icon.classList.add('bi-eye-slash');
+        } else {
+            password.type = 'password';
+            icon.classList.remove('bi-eye-slash');
+            icon.classList.add('bi-eye');
+        }
+    }
 </script>
 @endpush

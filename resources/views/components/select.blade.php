@@ -7,13 +7,13 @@
     'valueField' => 'id',
     'labelField' => null,
 ])
-<div class="mb-3">
+<div class="mb-4">
     @if ($label)
-        <label>{{ $label }}</label>
+        <label class="block text-sm font-medium text-gray-700 mb-2">{{ $label }}</label>
     @endif
     <select name="{{ $name }}"
         {{ $attributes->merge([
-            'class' => 'form-select ' . ($errors->has($name) ? 'is-invalid' : ''),
+            'class' => 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition ' . ($errors->has($name) ? 'border-red-500 bg-red-50' : ''),
         ]) }}>
         @if ($placeholder)
             <option value="">{{ $placeholder }}</option>
@@ -26,8 +26,6 @@
         @endforeach
     </select>
     @error($name)
-        <div class="invalid-feedback d-block">
-            {{ $message }}
-        </div>
+        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
     @enderror
 </div>

@@ -1,54 +1,52 @@
 @extends('layouts.siswa')
 @section('title', 'Detail Laporan Pengaduan')
 @section('content')
-<div class="page-header mt-4 mb-4">
-	<div class="d-flex justify-content-between align-items-center">
-		<div>
-			<h1>Detail Laporan Pengaduan</h1>
-			<p class="mb-0">Pantau progres penanganan laporan Anda</p>
-		</div>
-		<a href="{{ route('siswa.dashboard') }}" class="btn btn-secondary">
-			<i class="bi bi-arrow-left me-2"></i>Kembali
-		</a>
+<div class="flex flex-col md:flex-row md:justify-between md:items-start mb-8 mt-4">
+	<div>
+		<h1 class="text-3xl font-bold text-gray-900">Detail Laporan Pengaduan</h1>
+		<p class="text-gray-600 mt-1">Pantau progres penanganan laporan Anda</p>
 	</div>
+	<a href="{{ route('siswa.dashboard') }}" class="mt-4 md:mt-0 inline-flex items-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-lg font-medium transition">
+		<i class="bi bi-arrow-left"></i>Kembali
+	</a>
 </div>
 
-<div class="row">
-	<div class="col-lg-8">
-		
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+	<div class="lg:col-span-2">
 		<!-- Detail Laporan -->
-		<div class="card mb-4">
-			<div class="card-header">
-				<h5 class="card-title mb-0">
-					<i class="bi bi-file-text me-2"></i>Detail Laporan
-				</h5>
+		<div class="bg-white rounded-lg shadow p-6 mb-6">
+			<div class="flex items-center gap-2 mb-4 border-b border-gray-200 pb-4">
+				<i class="bi bi-file-text text-xl text-emerald-600"></i>
+				<h3 class="text-lg font-semibold text-gray-900">Detail Laporan</h3>
 			</div>
-			<div class="card-body">
-				<div class="mb-3">
-					<p class="text-muted small mb-1">Kategori</p>
-					<span class="badge bg-primary">{{ $laporan->kategori->nama_kategori ?? '-' }}</span>
+			<div class="space-y-4">
+				<div>
+					<p class="text-xs text-gray-500 mb-1 font-medium">Kategori</p>
+					<span class="inline-flex px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full text-sm font-medium">
+						{{ $laporan->kategori->nama_kategori ?? '-' }}
+					</span>
 				</div>
-				<div class="mb-3">
-					<p class="text-muted small mb-1">Lokasi Kejadian</p>
-					<p class="fw-bold">{{ $laporan->lokasi }}</p>
+				<div>
+					<p class="text-xs text-gray-500 mb-1 font-medium">Lokasi Kejadian</p>
+					<p class="font-semibold text-gray-900">{{ $laporan->lokasi }}</p>
 				</div>
-				<div class="mb-3">
-					<p class="text-muted small mb-1">Deskripsi Masalah</p>
-					<p>{{ $laporan->ket }}</p>
+				<div>
+					<p class="text-xs text-gray-500 mb-1 font-medium">Deskripsi Masalah</p>
+					<p class="text-gray-700 whitespace-pre-wrap">{{ $laporan->ket }}</p>
 				</div>
-				<div class="mb-0">
-					<p class="text-muted small mb-1">Status Laporan</p>
+				<div class="border-t border-gray-200 pt-4">
+					<p class="text-xs text-gray-500 mb-2 font-medium">Status Laporan</p>
 					@if ($laporan->aspirasi?->status === 'selesai')
-						<span class="badge bg-success">
-							<i class="bi bi-check-circle me-1" style="font-size: 0.5rem;"></i>Selesai
+						<span class="inline-flex items-center gap-1 px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+							<i class="bi bi-check-circle"></i>Selesai
 						</span>
 					@elseif ($laporan->aspirasi?->status === 'proses')
-						<span class="badge bg-warning text-dark">
-							<i class="bi bi-hourglass-split me-1" style="font-size: 0.5rem;"></i>Sedang Diproses
+						<span class="inline-flex items-center gap-1 px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium">
+							<i class="bi bi-hourglass-split"></i>Sedang Diproses
 						</span>
 					@else
-						<span class="badge bg-secondary">
-							<i class="bi bi-clock me-1" style="font-size: 0.5rem;"></i>Menunggu
+						<span class="inline-flex items-center gap-1 px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm font-medium">
+							<i class="bi bi-clock"></i>Menunggu
 						</span>
 					@endif
 				</div>
@@ -62,142 +60,140 @@
 		@endphp
 
 		@if ($lampiranLaporan->count() > 0)
-			<div class="card mb-4">
-				<div class="card-header">
-					<h5 class="card-title mb-0">
-						<i class="bi bi-paperclip me-2"></i>Lampiran Bukti Laporan ({{ $lampiranLaporan->count() }})
-					</h5>
+			<div class="bg-white rounded-lg shadow p-6 mb-6">
+				<div class="flex items-center gap-2 mb-4 border-b border-gray-200 pb-4">
+					<i class="bi bi-paperclip text-xl text-emerald-600"></i>
+					<h3 class="text-lg font-semibold text-gray-900">Lampiran Bukti Laporan ({{ $lampiranLaporan->count() }})</h3>
 				</div>
-				<div class="card-body">
-					<div class="row g-3">
-						@foreach ($lampiranLaporan as $attachment)
-							<div class="col-6 col-md-4">
-								<div class="card border">
-									@if ($attachment->isImage())
+				<div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+					@foreach ($lampiranLaporan as $attachment)
+						<div class="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition">
+							@if ($attachment->isImage())
+								<div class="relative overflow-hidden bg-gray-100 h-32 cursor-pointer group" onclick="document.getElementById('imageModal{{ $loop->index }}').classList.remove('hidden')">
+									<img src="{{ asset('storage/' . $attachment->file_path) }}"
+										class="w-full h-full object-cover group-hover:scale-105 transition"
+										alt="{{ $attachment->file_name }}">
+									<div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition flex items-center justify-center">
+										<i class="bi bi-eye text-white opacity-0 group-hover:opacity-100 transition"></i>
+									</div>
+								</div>
+							@else
+								<div class="bg-gray-100 h-32 flex items-center justify-center">
+									<i class="bi bi-file-pdf text-3xl text-red-500"></i>
+								</div>
+							@endif
+							<div class="p-2">
+								<p class="text-xs text-gray-700 truncate font-medium" title="{{ $attachment->file_name }}">
+									{{ $attachment->file_name }}
+								</p>
+								<p class="text-xs text-gray-500 mb-2">{{ $attachment->formatFileSize() }}</p>
+								<div class="flex gap-1">
+									<a href="{{ asset('storage/' . $attachment->file_path) }}"
+										class="flex-1 text-center px-2 py-1 text-xs border border-emerald-600 text-emerald-600 hover:bg-emerald-50 rounded transition font-medium"
+										target="_blank">
+										<i class="bi bi-download"></i> Buka
+									</a>
+									<form action="{{ route('siswa.attachment.delete', $attachment) }}"
+										method="POST" class="inline">
+										@csrf
+										@method('DELETE')
+										<button type="submit" class="px-2 py-1 text-xs border border-red-600 text-red-600 hover:bg-red-50 rounded transition font-medium"
+											onclick="return confirm('Hapus lampiran ini?')">
+											<i class="bi bi-trash"></i>
+										</button>
+									</form>
+								</div>
+							</div>
+						</div>
+
+						@if ($attachment->isImage())
+							<!-- Image Modal -->
+							<div id="imageModal{{ $loop->index }}" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" onclick="if(event.target===this) this.classList.add('hidden')">
+								<div class="bg-white rounded-lg max-w-2xl w-full max-h-96 overflow-auto">
+									<div class="flex justify-between items-center p-4 border-b border-gray-200">
+										<h3 class="text-sm font-semibold text-gray-900">{{ $attachment->file_name }}</h3>
+										<button onclick="document.getElementById('imageModal{{ $loop->index }}').classList.add('hidden')" class="text-gray-500 hover:text-gray-700">
+											<i class="bi bi-x text-2xl"></i>
+										</button>
+									</div>
+									<div class="p-4 text-center">
 										<img src="{{ asset('storage/' . $attachment->file_path) }}"
-											class="card-img-top" style="height: 150px; object-fit: cover; cursor: pointer;"
-											alt="{{ $attachment->file_name }}"
-											data-bs-toggle="modal" data-bs-target="#imageModal{{ $loop->index }}">
-									@else
-										<div class="card-img-top bg-light d-flex align-items-center justify-content-center"
-											style="height: 150px;">
-											<i class="bi bi-file-pdf fs-2 text-danger"></i>
-										</div>
-									@endif
-									<div class="card-body p-2">
-										<small class="text-truncate d-block" title="{{ $attachment->file_name }}">
-											{{ $attachment->file_name }}
-										</small>
-										<small class="text-muted">{{ $attachment->formatFileSize() }}</small>
-										<div class="mt-2 d-flex gap-1">
-											<a href="{{ asset('storage/' . $attachment->file_path) }}"
-												class="btn btn-sm btn-outline-primary flex-grow-1"
-												target="_blank">
-												<i class="bi bi-download me-1"></i>Buka
-											</a>
-											<form action="{{ route('siswa.attachment.delete', $attachment) }}"
-												method="POST" class="d-inline">
-												@csrf
-												@method('DELETE')
-												<button type="submit" class="btn btn-sm btn-outline-danger"
-													onclick="return confirm('Hapus lampiran ini?')">
-													<i class="bi bi-trash"></i>
-												</button>
-											</form>
-										</div>
+											class="max-w-full max-h-96 mx-auto" alt="{{ $attachment->file_name }}">
 									</div>
 								</div>
 							</div>
-
-							@if ($attachment->isImage())
-								<!-- Image Modal -->
-								<div class="modal fade" id="imageModal{{ $loop->index }}" tabindex="-1">
-									<div class="modal-dialog modal-lg modal-dialog-centered">
-										<div class="modal-content border-0">
-											<div class="modal-header border-0">
-												<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-											</div>
-											<div class="modal-body text-center p-0">
-												<img src="{{ asset('storage/' . $attachment->file_path) }}"
-													class="img-fluid" alt="{{ $attachment->file_name }}">
-											</div>
-										</div>
-									</div>
-								</div>
-							@endif
-						@endforeach
-					</div>
+						@endif
+					@endforeach
 				</div>
 			</div>
 		@endif
 
 		<!-- Lampiran Bukti Feedback -->
 		@if ($lampiranFeedback->count() > 0)
-			<div class="card mb-4">
-				<div class="card-header bg-success text-white">
-					<h5 class="card-title mb-0">
-						<i class="bi bi-check-circle me-2"></i>Lampiran Bukti Selesai ({{ $lampiranFeedback->count() }})
-					</h5>
+			<div class="bg-white rounded-lg shadow p-6 mb-6">
+				<div class="flex items-center gap-2 mb-4 border-b border-green-200 pb-4">
+					<i class="bi bi-check-circle text-xl text-green-600"></i>
+					<h3 class="text-lg font-semibold text-gray-900">Lampiran Bukti Selesai ({{ $lampiranFeedback->count() }})</h3>
 				</div>
-				<div class="card-body">
-					<div class="row g-3">
-						@foreach ($lampiranFeedback as $attachment)
-							<div class="col-6 col-md-4">
-								<div class="card border-success">
-									@if ($attachment->isImage())
+				<div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+					@foreach ($lampiranFeedback as $attachment)
+						<div class="border-2 border-green-200 rounded-lg overflow-hidden hover:shadow-md transition bg-green-50">
+							@if ($attachment->isImage())
+								<div class="relative overflow-hidden bg-gray-100 h-32 cursor-pointer group" onclick="document.getElementById('feedbackImageModal{{ $loop->index }}').classList.remove('hidden')">
+									<img src="{{ asset('storage/' . $attachment->file_path) }}"
+										class="w-full h-full object-cover group-hover:scale-105 transition"
+										alt="{{ $attachment->file_name }}">
+									<div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition flex items-center justify-center">
+										<i class="bi bi-eye text-white opacity-0 group-hover:opacity-100 transition"></i>
+									</div>
+								</div>
+							@else
+								<div class="bg-gray-100 h-32 flex items-center justify-center">
+									<i class="bi bi-file-pdf text-3xl text-red-500"></i>
+								</div>
+							@endif
+							<div class="p-2">
+								<p class="text-xs text-gray-700 truncate font-medium" title="{{ $attachment->file_name }}">
+									{{ $attachment->file_name }}
+								</p>
+								<p class="text-xs text-gray-500 mb-2">{{ $attachment->formatFileSize() }}</p>
+								<div class="flex gap-1">
+									<a href="{{ asset('storage/' . $attachment->file_path) }}"
+										class="flex-1 text-center px-2 py-1 text-xs border border-green-600 text-green-600 hover:bg-green-100 rounded transition font-medium"
+										target="_blank">
+										<i class="bi bi-download"></i> Buka
+									</a>
+									<form action="{{ route('siswa.attachment.delete', $attachment) }}"
+										method="POST" class="inline">
+										@csrf
+										@method('DELETE')
+										<button type="submit" class="px-2 py-1 text-xs border border-red-600 text-red-600 hover:bg-red-50 rounded transition font-medium"
+											onclick="return confirm('Hapus lampiran ini?')">
+											<i class="bi bi-trash"></i>
+										</button>
+									</form>
+								</div>
+							</div>
+						</div>
+
+						@if ($attachment->isImage())
+							<!-- Image Modal -->
+							<div id="feedbackImageModal{{ $loop->index }}" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" onclick="if(event.target===this) this.classList.add('hidden')">
+								<div class="bg-white rounded-lg max-w-2xl w-full max-h-96 overflow-auto">
+									<div class="flex justify-between items-center p-4 border-b border-gray-200">
+										<h3 class="text-sm font-semibold text-gray-900">{{ $attachment->file_name }}</h3>
+										<button onclick="document.getElementById('feedbackImageModal{{ $loop->index }}').classList.add('hidden')" class="text-gray-500 hover:text-gray-700">
+											<i class="bi bi-x text-2xl"></i>
+										</button>
+									</div>
+									<div class="p-4 text-center">
 										<img src="{{ asset('storage/' . $attachment->file_path) }}"
-											class="card-img-top" style="height: 150px; object-fit: cover; cursor: pointer;"
-											alt="{{ $attachment->file_name }}"
-											data-bs-toggle="modal" data-bs-target="#feedbackImageModal{{ $loop->index }}">
-									@else
-										<div class="card-img-top bg-light d-flex align-items-center justify-content-center"
-											style="height: 150px;">
-											<i class="bi bi-file-pdf fs-2 text-danger"></i>
-										</div>
-									@endif
-									<div class="card-body p-2">
-										<small class="text-truncate d-block" title="{{ $attachment->file_name }}">
-											{{ $attachment->file_name }}
-										</small>
-										<small class="text-muted">{{ $attachment->formatFileSize() }}</small>
-										<div class="mt-2 d-flex gap-1">
-											<a href="{{ asset('storage/' . $attachment->file_path) }}"
-												class="btn btn-sm btn-outline-success flex-grow-1"
-												target="_blank">
-												<i class="bi bi-download me-1"></i>Buka
-											</a>
-											<form action="{{ route('siswa.attachment.delete', $attachment) }}"
-												method="POST" class="d-inline">
-												@csrf
-												@method('DELETE')
-												<button type="submit" class="btn btn-sm btn-outline-danger"
-													onclick="return confirm('Hapus lampiran ini?')">
-													<i class="bi bi-trash"></i>
-												</button>
-											</form>
-										</div>
+											class="max-w-full max-h-96 mx-auto" alt="{{ $attachment->file_name }}">
 									</div>
 								</div>
 							</div>
-
-							@if ($attachment->isImage())
-								<!-- Image Modal -->
-								<div class="modal fade" id="feedbackImageModal{{ $loop->index }}" tabindex="-1">
-									<div class="modal-dialog modal-lg modal-dialog-centered">
-										<div class="modal-content border-0">
-											<div class="modal-header border-0">
-												<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-											</div>
-											<div class="modal-body text-center p-0">
-												<img src="{{ asset('storage/' . $attachment->file_path) }}"
-													class="img-fluid" alt="{{ $attachment->file_name }}">
-											</div>
-										</div>
-									</div>
-								</div>
-							@endif
-						@endforeach
-					</div>
+						@endif
+					@endforeach
 				</div>
 			</div>
 		@endif
@@ -211,26 +207,25 @@
 		@endif
 	</div>
 
-	<div class="col-lg-4">
-		<!-- Info Card -->
-		<div class="card sticky-top" style="top: 80px;">
-			<div class="card-header bg-light">
-				<h5 class="card-title mb-0">
-					<i class="bi bi-info-circle text-info me-2"></i>Informasi
-				</h5>
+	<!-- Info Card Sidebar -->
+	<div class="lg:col-span-1">
+		<div class="sticky top-24 bg-white rounded-lg shadow p-6">
+			<div class="flex items-center gap-2 mb-4 border-b border-gray-200 pb-4">
+				<i class="bi bi-info-circle text-xl text-cyan-600"></i>
+				<h3 class="text-lg font-semibold text-gray-900">Informasi</h3>
 			</div>
-			<div class="card-body">
-				<div class="mb-3">
-					<p class="text-muted small mb-1">ID Laporan</p>
-					<p class="fw-bold">{{ $laporan->id }}</p>
+			<div class="space-y-4">
+				<div>
+					<p class="text-xs text-gray-500 mb-1 font-medium">ID Laporan</p>
+					<p class="font-semibold text-gray-900 font-mono">{{ $laporan->id }}</p>
 				</div>
-				<div class="mb-3">
-					<p class="text-muted small mb-1">Tanggal Lapor</p>
-					<p class="fw-bold">{{ $laporan->created_at->format('d M Y H:i') }}</p>
+				<div>
+					<p class="text-xs text-gray-500 mb-1 font-medium">Tanggal Lapor</p>
+					<p class="font-semibold text-gray-900">{{ $laporan->created_at->format('d M Y H:i') }}</p>
 				</div>
-				<div class="mb-3">
-					<p class="text-muted small mb-1">Diperbarui</p>
-					<p class="fw-bold">{{ $laporan->updated_at->format('d M Y H:i') }}</p>
+				<div>
+					<p class="text-xs text-gray-500 mb-1 font-medium">Diperbarui</p>
+					<p class="font-semibold text-gray-900">{{ $laporan->updated_at->format('d M Y H:i') }}</p>
 				</div>
 			</div>
 		</div>

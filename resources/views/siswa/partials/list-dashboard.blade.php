@@ -1,52 +1,54 @@
-<table class="table table-hover mb-0">
-	<thead>
+<table class="w-full">
+	<thead class="bg-gray-50 border-b border-gray-200">
 		<tr>
-			<th>#</th>
-			<th>Laporan</th>
-			<th>Kategori</th>
-			<th>Status</th>
-			<th>Aksi</th>
+			<th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">#</th>
+			<th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Laporan</th>
+			<th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Kategori</th>
+			<th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Status</th>
+			<th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Aksi</th>
 		</tr>
 	</thead>
-	<tbody>
+	<tbody class="divide-y divide-gray-200">
 		@forelse ($laporan as $item)
-			<tr class="align-middle">
-				<td class="fw-bold">{{ $loop->iteration + ($laporan->firstItem() - 1) }}</td>
-				<td>
-					<p class="mb-1 fw-bold">{{ Str::limit($item->ket, 40) }}</p>
-					<small class="text-muted">{{ $item->created_at->format('d M Y H:i') }}</small>
+			<tr class="hover:bg-gray-50 transition">
+				<td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $loop->iteration + ($laporan->firstItem() - 1) }}</td>
+				<td class="px-6 py-4 text-sm">
+					<div class="font-medium text-gray-900">{{ Str::limit($item->ket, 40) }}</div>
+					<div class="text-gray-500 text-xs">{{ $item->created_at->format('d M Y H:i') }}</div>
 				</td>
-				<td>
-					<span class="badge bg-light text-dark">
+				<td class="px-6 py-4 text-sm">
+					<span class="px-2 py-1 bg-gray-100 text-gray-800 rounded text-sm">
 						{{ $item->kategori->nama_kategori ?? '-' }}
 					</span>
 				</td>
-				<td>
-					@if ($item->status == 'proses')
-						<span class="badge bg-warning text-dark">
-							<i class="bi bi-hourglass-split me-1" style="font-size: 0.5rem;"></i>Diproses
-						</span>
-					@elseif ($item->status == 'selesai')
-						<span class="badge bg-success">
-							<i class="bi bi-check-circle me-1" style="font-size: 0.5rem;"></i>Selesai
-						</span>
-					@else
-						<span class="badge bg-secondary">
-							<i class="bi bi-clock me-1" style="font-size: 0.5rem;"></i>Menunggu
-						</span>
-					@endif
+				<td class="px-6 py-4 text-sm">
+					@php
+						$statusConfig = [
+							'selesai' => ['bg' => 'bg-green-100', 'text' => 'text-green-800', 'label' => 'Selesai', 'icon' => 'check-circle'],
+							'proses' => ['bg' => 'bg-yellow-100', 'text' => 'text-yellow-800', 'label' => 'Diproses', 'icon' => 'hourglass-split'],
+							'default' => ['bg' => 'bg-gray-100', 'text' => 'text-gray-800', 'label' => 'Menunggu', 'icon' => 'clock']
+						];
+						$status = $item->status ?? 'default';
+						$config = $statusConfig[$status] ?? $statusConfig['default'];
+					@endphp
+					<span class="{{ $config['bg'] }} {{ $config['text'] }} px-2 py-1 rounded text-sm font-medium flex items-center gap-1 w-fit">
+						<i class="bi bi-{{ $config['icon'] }}"></i>
+						{{ $config['label'] }}
+					</span>
 				</td>
-				<td>
-					<a href="{{ route('siswa.laporan.show', $item->id) }}" class="btn btn-sm btn-outline-primary">
-						<i class="bi bi-eye me-1"></i>Detail
+				<td class="px-6 py-4 text-sm">
+					<a href="{{ route('siswa.laporan.show', $item->id) }}" class="inline-flex items-center gap-1 px-3 py-1 text-green-600 hover:text-green-700 font-medium border border-green-600 rounded hover:bg-green-50 transition">
+						<i class="bi bi-eye"></i>Detail
 					</a>
 				</td>
 			</tr>
 		@empty
 			<tr>
-				<td colspan="5" class="text-center text-muted py-5">
-					<i class="bi bi-inbox" style="font-size: 2rem;"></i>
-					<p class="mt-3 mb-0">Belum ada laporan. Mulai dengan <a href="{{ route('siswa.laporan.create') }}" class="text-primary fw-bold text-decoration-none">membuat laporan baru</a></p>
+				<td colspan="5" class="px-6 py-12 text-center">
+					<div class="flex flex-col items-center justify-center">
+						<i class="bi bi-inbox text-4xl text-gray-400 mb-3"></i>
+						<p class="text-gray-500 mb-3">Belum ada laporan. Mulai dengan <a href="{{ route('siswa.laporan.create') }}" class="text-green-600 hover:text-green-700 font-medium">membuat laporan baru</a></p>
+					</div>
 				</td>
 			</tr>
 		@endforelse

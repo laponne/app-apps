@@ -1,47 +1,56 @@
 @extends('layouts.auth')
 @section('title', 'Login Siswa')
 @section('content')
-<div class="card shadow-md border-0" style="width: 100%; max-width: 420px;">
-	<div class="card-header bg-primary text-white text-center py-4">
-		<h4 class="card-title mb-0">
-			<i class="bi bi-box-arrow-in-right me-2"></i>Login Siswa
-		</h4>
-	</div>
-	<form class="card-body p-4" method="post" action="{{ route('siswa.login') }}">
-		@csrf
+    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-green-600 to-green-700 px-6 py-8 text-center">
+            <div class="inline-flex items-center justify-center w-12 h-12 bg-white/20 rounded-full mb-3">
+                <i class="bi bi-box-arrow-in-right text-white text-lg"></i>
+            </div>
+            <h2 class="text-xl font-bold text-white">Login Siswa</h2>
+            <p class="text-green-100 text-sm mt-1">Masuk ke portal siswa</p>
+        </div>
 
-		<div class="mb-4">
-			<label class="form-label">NIS (Nomor Induk Siswa)</label>
-			<div class="input-group">
-				<span class="input-group-text bg-light border-end-0">
-					<i class="bi bi-person text-muted"></i>
-				</span>
-				<input type="text"
-					class="form-control border-start-0 @error('nis') is-invalid @enderror"
-					name="nis"
-					placeholder="Masukkan NIS Anda">
-			</div>
-			@error('nis')
-				<div class="invalid-feedback d-block mt-2">
-					{{ $message }}
-				</div>
-			@enderror
-		</div>
+        <!-- Form -->
+        <form class="p-6" method="post" action="{{ route('siswa.login') }}">
+            @csrf
 
-		<div class="d-grid mb-3">
-			<button type="submit" class="btn btn-primary btn-lg">
-				<i class="bi bi-unlock me-2"></i>Masuk
-			</button>
-		</div>
+            <!-- NIS Field -->
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">NIS (Nomor Induk Siswa)</label>
+                <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-100 transition">
+                    <span class="px-3 py-2 bg-gray-50 text-gray-500">
+                        <i class="bi bi-person"></i>
+                    </span>
+                    <input type="text" name="nis"
+                        class="flex-1 px-3 py-2 border-0 focus:ring-0 outline-none @error('nis') bg-red-50 @enderror"
+                        placeholder="Masukkan NIS Anda"
+                        value="{{ old('nis') }}">
+                </div>
+                @error('nis')
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                @enderror
+            </div>
 
-		<hr class="my-3">
+            <!-- Submit Button -->
+            <button type="submit" class="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-medium py-2 rounded-lg transition duration-200 flex items-center justify-center gap-2">
+                <i class="bi bi-unlock"></i>Masuk
+            </button>
 
-		<p class="text-center text-muted small mb-0">
-			Belum punya akun?
-			<a href="{{ route('siswa.register') }}" class="text-primary fw-bold text-decoration-none">
-				Daftar di sini
-			</a>
-		</p>
-	</form>
-</div>
+            <!-- Divider -->
+            <div class="flex items-center gap-3 my-6">
+                <div class="flex-1 h-px bg-gray-300"></div>
+                <span class="text-xs text-gray-500 font-medium">atau</span>
+                <div class="flex-1 h-px bg-gray-300"></div>
+            </div>
+
+            <!-- Register Link -->
+            <p class="text-center text-gray-600 text-sm">
+                Belum punya akun? 
+                <a href="{{ route('siswa.register') }}" class="text-green-600 hover:text-green-700 font-medium transition">
+                    Daftar di sini
+                </a>
+            </p>
+        </form>
+    </div>
 @endsection

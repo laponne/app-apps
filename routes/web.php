@@ -53,3 +53,4 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('/laporan', LaporanAspirasiController::class)->only('index', 'show', 'update');
     });
 });
+

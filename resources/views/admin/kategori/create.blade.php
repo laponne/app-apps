@@ -1,37 +1,31 @@
 @extends('layouts.admin')
 @section('title', 'Tambah Kategori')
 @section('content')
-<div class="page-header mt-4 mb-4">
-	<h1>Tambah Kategori Laporan</h1>
-	<p class="mb-0">Buat kategori laporan baru untuk pengaduan siswa</p>
-</div>
+	<!-- Page Header -->
+	<div class="mb-8">
+		<h1 class="text-3xl font-bold text-gray-900">Tambah Kategori Laporan</h1>
+		<p class="text-gray-600 mt-1">Buat kategori laporan baru untuk pengaduan siswa</p>
+	</div>
 
-<div class="row">
-	<div class="col-lg-6">
-		<div class="card">
-			<div class="card-header">
-				<h5 class="card-title mb-0">
-					<i class="bi bi-plus-circle me-2"></i>Form Kategori Baru
-				</h5>
-			</div>
-			<form action="{{ route('admin.kategori.store') }}" method="POST" class="card-body">
+	<div class="max-w-2xl">
+		<div class="bg-white rounded-lg shadow p-6">
+			<h3 class="text-xl font-semibold text-gray-900 mb-6 flex items-center gap-2">
+				<i class="bi bi-plus-circle"></i>Form Kategori Baru
+			</h3>
+			<form action="{{ route('admin.kategori.store') }}" method="POST" class="space-y-6">
 				@csrf
 
-				<div class="mb-4">
-					<label class="form-label">Nama Kategori</label>
-					<x-input name="nama_kategori" placeholder="Contoh: Ruang Kelas, Laboratorium, Toilet" />
-				</div>
+				<x-input name="nama_kategori" label="Nama Kategori" placeholder="Contoh: Ruang Kelas, Laboratorium, Toilet" />
 
-				<div class="d-flex gap-2">
-					<button type="submit" class="btn btn-primary flex-grow-1">
-						<i class="bi bi-check-circle me-2"></i>Simpan
+				<div class="flex gap-3">
+					<button type="submit" class="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium py-2 rounded-lg transition flex items-center justify-center gap-2">
+						<i class="bi bi-check-circle"></i>Simpan
 					</button>
-					<a href="{{ route('admin.kategori.index') }}" class="btn btn-outline-secondary">
+					<a href="{{ route('admin.kategori.index') }}" class="flex-1 border-2 border-gray-300 text-gray-700 hover:bg-gray-50 font-medium py-2 rounded-lg transition flex items-center justify-center gap-2">
 						Batal
 					</a>
 				</div>
 			</form>
 		</div>
 	</div>
-</div>
 @endsection

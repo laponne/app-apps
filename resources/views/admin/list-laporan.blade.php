@@ -1,53 +1,58 @@
-<div class="card mt-4">
-	<div class="card-header">
-		<h5 class="card-title mb-0">
-			<i class="bi bi-list-ul me-2"></i>Daftar Laporan Terbaru
-		</h5>
+<div class="bg-white rounded-lg shadow overflow-hidden">
+	<div class="border-b border-gray-200 px-6 py-4">
+		<h3 class="text-lg font-semibold text-gray-900 flex items-center gap-2">
+			<i class="bi bi-list-ul"></i>
+			Daftar Laporan Terbaru
+		</h3>
 	</div>
-	<div class="card-body p-0 table-responsive">
-		<table class="table table-hover mb-0">
-			<thead>
+	<div class="overflow-x-auto">
+		<table class="w-full">
+			<thead class="bg-gray-50 border-b border-gray-200">
 				<tr>
-					<th>#</th>
-					<th>Siswa</th>
-					<th>Kategori</th>
-					<th>Status</th>
-					<th>Tanggal Lapor</th>
+					<th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">#</th>
+					<th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Siswa</th>
+					<th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Kategori</th>
+					<th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Status</th>
+					<th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Tanggal Lapor</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody class="divide-y divide-gray-200">
 				@forelse ($laporanTerbaru ?? [] as $item)
-					<tr class="align-middle">
-						<td class="fw-bold">{{ $loop->iteration }}</td>
-						<td>
-							{{ $item->siswa->nama ?? '-' }}
-							<br>
-							<small class="text-muted">{{ $item->siswa->nis ?? '-' }}</small>
+					<tr class="hover:bg-gray-50 transition">
+						<td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $loop->iteration }}</td>
+						<td class="px-6 py-4 text-sm">
+							<div class="font-medium text-gray-900">{{ $item->siswa->nama ?? '-' }}</div>
+							<div class="text-gray-500 text-xs">{{ $item->siswa->nis ?? '-' }}</div>
 						</td>
-						<td>
-							<span class="badge bg-light text-dark">
+						<td class="px-6 py-4 text-sm">
+							<span class="px-2 py-1 bg-gray-100 text-gray-800 rounded text-sm">
 								{{ $item->kategori->nama_kategori ?? '-' }}
 							</span>
 						</td>
-						<td>
+						<td class="px-6 py-4 text-sm">
 							@php
-								$statusBadge = $item->aspirasi?->status === 'selesai'
-									? 'success' : ($item->aspirasi?->status === 'proses' ? 'warning' : 'secondary');
-								$statusLabel = ucfirst($item->aspirasi?->status ?? 'Baru');
+								$statusConfig = [
+									'selesai' => ['bg' => 'bg-green-100', 'text' => 'text-green-800', 'label' => 'Selesai'],
+									'proses' => ['bg' => 'bg-yellow-100', 'text' => 'text-yellow-800', 'label' => 'Diproses'],
+									'baru' => ['bg' => 'bg-blue-100', 'text' => 'text-blue-800', 'label' => 'Baru']
+								];
+								$status = $item->aspirasi?->status ?? 'baru';
+								$config = $statusConfig[$status] ?? $statusConfig['baru'];
 							@endphp
-							<span class="badge bg-{{ $statusBadge }}">
-								<i class="bi bi-circle-fill me-1" style="font-size: 0.5rem;"></i>{{ $statusLabel }}
+							<span class="{{ $config['bg'] }} {{ $config['text'] }} px-2 py-1 rounded text-sm font-medium flex items-center gap-1 w-fit">
+								<span class="w-1.5 h-1.5 bg-current rounded-full"></span>
+								{{ ucfirst($config['label']) }}
 							</span>
 						</td>
-						<td>
-							<small class="text-muted">{{ $item->created_at->format('d M Y') }}</small>
-						</td>
+						<td class="px-6 py-4 text-sm text-gray-500">{{ $item->created_at->format('d M Y') }}</td>
 					</tr>
 				@empty
 					<tr>
-						<td colspan="5" class="text-center text-muted py-5">
-							<i class="bi bi-inbox" style="font-size: 2rem;"></i>
-							<p class="mt-3 mb-0">Belum ada laporan</p>
+						<td colspan="5" class="px-6 py-12 text-center">
+							<div class="flex flex-col items-center justify-center">
+								<i class="bi bi-inbox text-4xl text-gray-400 mb-3"></i>
+								<p class="text-gray-500">Belum ada laporan</p>
+							</div>
 						</td>
 					</tr>
 				@endforelse

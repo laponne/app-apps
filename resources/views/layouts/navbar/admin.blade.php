@@ -1,15 +1,32 @@
-<nav class="navbar navbar-expand-lg" data-bs-theme="light">
-	<div class="container">
-		<a class="navbar-brand" href="{{ route('welcome') }}">
-			<i class="bi bi-speedometer2 me-2"></i>{{ config('app.name') }}
-		</a>
-		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarNav">
-			<ul class="navbar-nav ms-auto">
+<nav class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+		<div class="flex justify-between items-center h-16">
+			<!-- Logo -->
+			<a href="{{ route('welcome') }}" class="flex items-center gap-2 text-lg font-bold text-blue-600 hover:text-blue-700 transition">
+				<i class="bi bi-speedometer2"></i>
+				<span>{{ config('app.name') }}</span>
+			</a>
+
+			<!-- Desktop Menu -->
+			<div class="hidden md:flex items-center gap-8">
 				@include('layouts.nav-items.admin-auth')
-			</ul>
+			</div>
+
+			<!-- Mobile Menu Button -->
+			<button id="mobile-menu-btn" class="md:hidden p-2 hover:bg-gray-100 rounded-lg transition">
+				<i class="bi bi-list text-xl"></i>
+			</button>
+		</div>
+
+		<!-- Mobile Menu -->
+		<div id="mobile-menu" class="hidden md:hidden pb-4 border-t border-gray-200">
+			@include('layouts.nav-items.admin-auth')
 		</div>
 	</div>
 </nav>
+
+<script>
+	document.getElementById('mobile-menu-btn')?.addEventListener('click', function() {
+		document.getElementById('mobile-menu').classList.toggle('hidden');
+	});
+</script>

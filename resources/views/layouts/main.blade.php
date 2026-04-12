@@ -11,13 +11,11 @@
             {{ config('app.name') }}
         @endif
     </title>
-    <link rel="stylesheet" href="{{ asset('bs/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('bs/font/bootstrap-icons.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 </head>
-<body>
+<body class="bg-gray-50">
     @yield('body')
-    <script src="{{ asset('bs/js/bootstrap.bundle.min.js') }}"></script>
     @stack('js')
 </body>
 </html>
